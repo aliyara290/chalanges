@@ -93,7 +93,6 @@ void affichage(struct contact person[], int nb)
     }
 }
 
-
 int main()
 {
     int nb = 0;

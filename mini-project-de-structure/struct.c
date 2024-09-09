@@ -26,20 +26,25 @@ struct person {
     struct accountInfo account;
 };
 
-int main() {
-    struct person person_1;
-    printf("Enter your First name: ");
-    scanf("%s", person_1.firstName);
-    printf("Enter your Last name: ");
-    scanf("%s", person_1.lastName);
-    printf("Enter your Birth date(day/month/year): ");
-    scanf("%d %d %d", &person_1.birth.day, &person_1.birth.month, &person_1.birth.year);
-    // printf("Enter your Name: ");
-    // scanf("%s", person_1.firstName);
-    // printf("Enter your Name: ");
-    // scanf("%s", person_1.firstName);
-    
+void affichage(struct person p1) {
+     printf("Your first Name is: %s", p1.firstName);
+    printf("Your last name is: %s", p1.lastName);
+    printf("Your last name is: %s / %s / %s", p1.birth.day, p1.birth.month, p1.birth.year);
+}
 
-    printf("Your Name is: %s", person_1.firstName);
+int main() {
+    struct person p1;
+    int cases;
+    
+    char data[] = {"first name", "last name", "birthday"}
+    
+    do{
+        
+    switch(cases) {
+
+    }
+    }
+
+   
     return 0;
 }
