@@ -29,10 +29,10 @@ void eleveeNote(int notes[], int nb) {
     int base = notes[0];
 
     for(int i = 1; i < nb; i++) {
-        if(notes[i] > elevee) {
+        if(notes[i] > eleve) {
             eleve = notes[i];
         }
-        if(notes[i] < basse) {
+        if(notes[i] < base) {
             base = notes[i];
         }
     }
