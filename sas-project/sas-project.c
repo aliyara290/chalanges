@@ -35,27 +35,26 @@ void ajouterEtudiant(struct etudiantInfo etudiants[], int nb)
     printf("4. Ai.\n");
     printf("Departement: ");
     scanf("%d", &depChoix);
-    switch(depChoix) {
-        case 1:
+    switch (depChoix)
+    {
+    case 1:
         strcpy(etudiants[nb].departement, "dev");
         break;
-        case 2:
+    case 2:
         strcpy(etudiants[nb].departement, "data");
         break;
-        case 3:
+    case 3:
         strcpy(etudiants[nb].departement, "devops");
         break;
-        case 4:
+    case 4:
         strcpy(etudiants[nb].departement, "ai");
         break;
-        default:
+    default:
         printf("Entrer numero entre 1 et 4!.");
         break;
     }
-    // printf("Entrez le département: ");
-    // scanf("%s", etudiants[nb].departement);
     printf("Entrez la note: ");
-    scanf("%d", &etudiants[nb].noteGenerale);
+    scanf("%f", &etudiants[nb].noteGenerale);
 }
 
 void affichage(struct etudiantInfo etudiants[], int nb)
@@ -66,9 +65,9 @@ void affichage(struct etudiantInfo etudiants[], int nb)
         printf("ID: %d\n", etudiants[i].id);
         printf("Prenom: %s\n", etudiants[i].prenom);
         printf("Nom: %s\n", etudiants[i].nom);
-        printf("Date de naissance: %s\n", etudiants[i].dateNaissance.jour, etudiants[i].dateNaissance.mois, etudiants[i].dateNaissance.annee);
+        printf("Date de naissance: %s/%s/%s\n", etudiants[i].dateNaissance.jour, etudiants[i].dateNaissance.mois, etudiants[i].dateNaissance.annee);
         printf("Departement: %s\n", etudiants[i].departement);
-        printf("Note general: %d\n", etudiants[i].noteGenerale);
+        printf("Note general: %.1f\n", etudiants[i].noteGenerale);
         printf("----------------------\n");
     }
     return;
@@ -156,49 +155,44 @@ void modification(struct etudiantInfo etudiants[], int nb)
     printf("Étudiant avec ID %d non trouvé !", studentId);
 }
 
-void deleteEtudiant(struct etudiantInfo etudiants[], int nb) {
-    int studentId;
+int deleteEtudiant(struct etudiantInfo etudiants[], int nb)
+{
+    int studentId, found = 0;
     printf("Enter etudiant ID: ");
     scanf("%d", &studentId);
 
-    for(int i = 0; i < nb; i++) {
-        if(etudiants[i].id == studentId) {
-            for(int j = i; j < nb - 1; j++) {
+    for (int i = 0; i < nb; i++)
+    {
+        if (etudiants[i].id == studentId)
+        {
+            found = 1;
+            for (int j = i; j < nb - 1; j++)
+            {
                 etudiants[j] = etudiants[j + 1];
             }
-            printf("Contact deleted successfully.\n");
+            nb--;
+            printf("Etudiant deleted successfully.\n");
+            break;
         }
     }
-   
-}
 
-void modifieEtSupp(struct etudiantInfo etudiants[], int nb) {
-    int options;
-    printf("\n1. Pour Modifie un etudiant.\n");
-    printf("2. Pour supprimer un etudiant.\n");
-    printf("Entrer votre choix:");
-    scanf("%d", &options);
-
-    switch(options) {
-        case 1:
-        modification(etudiants, nb);
-        break;
-        case 2:
-        deleteEtudiant(etudiants, nb);
-        nb--;
-        break;
-        default:
-        printf("Entrer 1 ou 2");
-        break;
+    if (!found)
+    {
+        printf("Etudiant with ID %d not found.\n", studentId);
     }
+
+    return nb;
 }
 
-void rechercherEtudiant(struct etudiantInfo etudiants[], int nb) {
+void rechercherEtudiant(struct etudiantInfo etudiants[], int nb)
+{
     char etudiantNom[40];
     printf("Entrer le nom de etudiant: ");
     scanf("%s", etudiantNom);
-    for(int i = 0; i < nb; i++) {
-        if(strcmp(etudiants[i].nom, etudiantNom) == 0) {
+    for (int i = 0; i < nb; i++)
+    {
+        if (strcmp(etudiants[i].nom, etudiantNom) == 0)
+        {
             printf("\n------------------------\n");
             printf("**Etudiant ID-%d informations:\n", etudiants[i].id);
             printf("id: %d\n", etudiants[i].id);
@@ -208,15 +202,17 @@ void rechercherEtudiant(struct etudiantInfo etudiants[], int nb) {
             printf("departement: %s\n", etudiants[i].departement);
             printf("note general: %d\n", etudiants[i].noteGenerale);
             printf("------------------------\n");
-            return; 
+            return;
         }
-        else {
+        else
+        {
             printf("No etudiant avec c'est nom!");
         }
     }
 }
 
-void afficherSpcDepart(struct etudiantInfo etudiants[], int nb) {
+void afficherSpcDepart(struct etudiantInfo etudiants[], int nb)
+{
     int choix;
     printf("\n1. Pour afficher Web Development departement.\n");
     printf("2. Pour afficher Data Science departement.\n");
@@ -228,27 +224,29 @@ void afficherSpcDepart(struct etudiantInfo etudiants[], int nb) {
     char depSelected[30];
     int found = 0;
 
-    switch(choix) {
-        case 1:
-            strcpy(depSelected, "dev");
-            break;
-        case 2:
-            strcpy(depSelected, "data");
-            break;
-        case 3:
-            strcpy(depSelected, "devops");
-            break;
-        case 4:
-            strcpy(depSelected, "ai");
-            break;
-        default:
-            printf("Entrer numero entre 1 et 4!\n");
-            return;
+    switch (choix)
+    {
+    case 1:
+        strcpy(depSelected, "dev");
+        break;
+    case 2:
+        strcpy(depSelected, "data");
+        break;
+    case 3:
+        strcpy(depSelected, "devops");
+        break;
+    case 4:
+        strcpy(depSelected, "ai");
+        break;
+    default:
+        printf("Entrer numero entre 1 et 4!\n");
+        return;
     }
 
-
-    for(int i = 0; i < nb; i++) {
-        if(strcmp(etudiants[i].departement, depSelected) == 0) {
+    for (int i = 0; i < nb; i++)
+    {
+        if (strcmp(etudiants[i].departement, depSelected) == 0)
+        {
             printf("\nÉtudiants du département de %s: \n", depSelected);
             printf("**Etudiant ID-%d informations:\n", etudiants[i].id);
             printf("id: %d\n", etudiants[i].id);
@@ -262,14 +260,66 @@ void afficherSpcDepart(struct etudiantInfo etudiants[], int nb) {
         }
     }
 
-    if (!found) {
+    if (!found)
+    {
         printf("Aucun étudiant trouvé dans le département %s.\n", depSelected);
     }
 }
 
+void afficherNumEtdDepart(struct etudiantInfo etudiants[], int nb)
+{
+    int choix;
+    printf("\n1. Pour afficher nomber de etudiants dans Web Development departement.\n");
+    printf("2. Pour afficher nomber de etudiants dans Data Science departement.\n");
+    printf("3. Pour afficher nomber de etudiants dans DevOps departement.\n");
+    printf("4. Pour afficher nomber de etudiants dans Ai departement.\n");
+    printf("Enter a departement numero: ");
+    scanf("%d", &choix);
 
-// pour afficher la moyenne de chaque departement
-void moyenneGenDepart(struct etudiantInfo etudiants[], int nb) {
+    char depSelected[30];
+    int total = 0;
+    int count = 0;
+    int found = 0;
+
+    switch (choix)
+    {
+    case 1:
+        strcpy(depSelected, "dev");
+        break;
+    case 2:
+        strcpy(depSelected, "data");
+        break;
+    case 3:
+        strcpy(depSelected, "devops");
+        break;
+    case 4:
+        strcpy(depSelected, "ai");
+        break;
+    default:
+        printf("Entrer numero entre 1 et 4!\n");
+        return;
+    }
+
+    for (int i = 0; i < nb; i++)
+    {
+        if (strcmp(etudiants[i].departement, depSelected) == 0)
+        {
+            count++;
+        }
+    }
+    if (count == 0)
+    {
+        printf("\nNo etudiant dans c'est departement!");
+    }
+    else
+    {
+        total = count;
+        printf("\nTotal number de etudiant dans %s departement est: %d", depSelected, total);
+    }
+}
+
+void moyenneGenDepart(struct etudiantInfo etudiants[], int nb)
+{
     int deptChoix;
     printf("1. pour afficher la moyenne general de Web Development departement.\n");
     printf("2. pour afficher la moyenne general de Data Science departement.\n");
@@ -277,62 +327,99 @@ void moyenneGenDepart(struct etudiantInfo etudiants[], int nb) {
     printf("4. pour afficher la moyenne general de Ai departement.\n");
     printf("Entrer votre choix: ");
     scanf("%d", &deptChoix);
-    float somme = 0;
-    float noteGeneral = 0;
-    char depSelected[30];
-    int found = 0;
 
-    switch(deptChoix) {
-        case 1:
-            strcpy(depSelected, "dev");
-            break;
-        case 2:
-            strcpy(depSelected, "data");
-            break;
-        case 3:
-            strcpy(depSelected, "devops");
-            break;
-        case 4:
-            strcpy(depSelected, "ai");
-            break;
-        default:
-            printf("Entrer numero entre 1 et 4!\n");
-            return;
+    float somme = 0;
+    int count = 0;
+    char depSelected[30];
+
+    // Select department based on user choice
+    switch (deptChoix)
+    {
+    case 1:
+        strcpy(depSelected, "dev");
+        break;
+    case 2:
+        strcpy(depSelected, "data");
+        break;
+    case 3:
+        strcpy(depSelected, "devops");
+        break;
+    case 4:
+        strcpy(depSelected, "ai");
+        break;
+    default:
+        printf("Entrer numero entre 1 et 4!\n");
+        return;
     }
 
-    for(int i = 0; i < nb; i++) {
-        if(strcmp(etudiants[i].departement, depSelected) == 0) {
+    for (int i = 0; i < nb; i++)
+    {
+        if (strcmp(etudiants[i].departement, depSelected) == 0)
+        {
             somme += etudiants[i].noteGenerale;
-            found = 1;
-            noteGeneral = somme;
-            printf("\nLa note general de %s departement est: %d", depSelected, noteGeneral);
+            count++;
         }
     }
-
-    if(!found) {
-        printf("\nNo etudiant exist.");
+    if (count == 0)
+    {
+        printf("\nAucun étudiant trouvé dans le département %s.\n", depSelected);
+    }
+    else
+    {
+        float noteGeneral = somme / count;
+        printf("\nLa note generale de %s departement est: %.2f\n", depSelected, noteGeneral);
     }
 }
 
-void moyenneGeneral(struct etudiantInfo etudiants[], int nb) {
+void moyenneUnivers(struct etudiantInfo etudiants[], int nb)
+{
+    float somme = 0;
+    float notesGeneral = 0;
+    for (int i = 0; i < nb; i++)
+    {
+        somme += etudiants[i].noteGenerale;
+    }
+    notesGeneral = somme / nb;
+    printf("\nLa moyenne generale l\'université entière est: %.2f\n", notesGeneral);
+}
+
+void moyenneGeneral(struct etudiantInfo etudiants[], int nb)
+{
     int moyChoix;
     printf("1. pour afficher la moyenne de chaque departement.\n");
     printf("2. pour afficher la moyenne de l\'université entière.\n");
     printf("\nEntrer votre choix: ");
     scanf("%d", &moyChoix);
-    switch(moyChoix) {
-        case 1:
+    switch (moyChoix)
+    {
+    case 1:
         moyenneGenDepart(etudiants, nb);
         break;
-        case 2:
-        // pour afficher la moyenne de l’université entière.
+    case 2:
+        moyenneUnivers(etudiants, nb);
         break;
-        default:
+    default:
         printf("Entrer numero 1 ou 2");
         return;
     }
-
 }
+
+void totalEtudiants(struct etudiantInfo etudiants[], int nb)
+{
+    int total = 0;
+
+    for (int i = 0; i < nb; i++)
+    {
+        total = nb;
+    }
+    printf("\nLe nombre total de etudiants est: %d", total);
+
+    if (nb == 0)
+    {
+        printf("\nIl n'y a pas d'étudiants");
+    }
+}
+
 int main()
 {
     int nb = 0;
@@ -341,18 +428,20 @@ int main()
     int choix;
     do
     {
-        printf("\n1. Ajouter un étudiant: \n");
-        printf("2. Modifier ou Supprimer un étudiant: \n");
-        printf("3. Afficher tous les étudiants: \n");
-        printf("4. Rechercher un étudiant par nom: \n");
-        printf("5. Afficher la liste des étudiants dans un département spécifique: \n");
-        printf("6. Afficher les étudiants par département: \n");
-        printf("7. Afficher les moyenne general par chaque par département et de l’université entière.: \n");
-        printf("8. Afficher les 3 meilleurs étudiants: \n");
-        printf("9. Afficher les étudiants ayant réussi: \n");
-        printf("10. Trier les étudiants par nom: \n");
-        printf("11. Trier les étudiants par niveau: \n");
-        printf("12. Trier les étudiants par statut: \n");
+        printf("\n1. Ajouter un étudiant: \n");                                          // done
+        printf("2. Modifier un étudiant: \n");                                           // done
+        printf("3. Supprimer un étudiant: \n");                                          // done
+        printf("4. Afficher tous les étudiants: \n");                                    // done
+        printf("5. Rechercher un étudiant par nom: \n");                                 // done
+        printf("6. Afficher la liste des étudiants dans un département spécifique: \n"); // done
+        printf("7. Afficher les étudiants dans chaque département: \n");
+        printf("8. Afficher les M-G par chaque département et de l\'université entière.: \n"); // done
+        printf("9. Afficher les 3 meilleurs étudiants: \n");                                   // done
+        printf("10. Afficher le nomber de etudiants dans la université: \n");                  // done
+        printf("11. Afficher les étudiants ayant réussi: \n");
+        printf("12. Trier les étudiants par nom: \n");
+        printf("13. Trier les étudiants par niveau: \n");
+        printf("14. Trier les étudiants par statut: \n");
         printf("0. Quitter\n");
         printf("\nChoisissez une option: ");
         scanf("%d", &choix);
@@ -364,31 +453,34 @@ int main()
             nb++;
             break;
         case 2:
-            printf("Hello world number is : %d", nb);
-            modifieEtSupp(etudiants, nb);
+            modification(etudiants, nb);
             break;
         case 3:
-            affichage(etudiants, nb);
+            nb = deleteEtudiant(etudiants, nb);
             break;
         case 4:
-            rechercherEtudiant(etudiants, nb);
+            affichage(etudiants, nb);
             break;
         case 5:
-            afficherSpcDepart(etudiants, nb);
+            rechercherEtudiant(etudiants, nb);
             break;
         case 6:
-            // afficherParDep(etudiants, nb);
+            afficherSpcDepart(etudiants, nb);
             break;
         case 7:
-            moyenneGeneral(etudiants, nb);
+            afficherNumEtdDepart(etudiants, nb);
             break;
         case 8:
+            moyenneGeneral(etudiants, nb);
             break;
         case 9:
             break;
         case 10:
+            totalEtudiants(etudiants, nb);
             break;
         case 11:
+            break;
+        case 12:
             break;
         case 0:
             printf("Au revoir!");
