@@ -1,51 +1,143 @@
 #include <stdio.h>
-struct etudiantDate {
+
+struct etudiantDate
+{
     char jour[20];
     char mois[20];
     char annee[20];
 };
 
-struct etudiantInfo {
-    char id[100];
+struct etudiantInfo
+{
+    int id;
     char nom[20];
     char prenom[30];
     char departement[40];
-    char noteGenerale[100];
+    int noteGenerale;
     struct etudiantDate dateNaissance;
 };
-void ajouterEtudiant(struct etudiantInfo etudiants[]) {
-    printf("Entrez l'ID de l'étudiant: \n");
-    scanf("%s", etudiants->id);
-    printf("Entrez le prénom: \n");
-    scanf("%s", etudiants->prenom);
-    printf("Entrez le nom: \n");
-    scanf("%s", etudiants->nom);
-    printf("Entrez la date de naissance (JJ/MM/AAAA): \n");
-    scanf("%s %s %s", etudiants->dateNaissance.jour, etudiants->dateNaissance.mois, etudiants->dateNaissance.annee);
-    printf("Entrez le département: \n");
-    scanf("%s", etudiants->departement);
-    printf("Entrez la note: \n");
-    scanf("%s", etudiants->noteGenerale);
+
+int ajouterEtudiant(struct etudiantInfo etudiants[], int nb)
+{
+    printf("Entrez l'ID de l'étudiant: ");
+    scanf("%d", &etudiants[nb].id);
+    printf("Entrez le prénom: ");
+    scanf("%s", etudiants[nb].prenom);
+    printf("Entrez le nom: ");
+    scanf("%s", etudiants[nb].nom);
+    printf("Entrez la date de naissance (JJ/MM/AAAA): ");
+    scanf("%s %s %s", etudiants[nb].dateNaissance.jour, etudiants[nb].dateNaissance.mois, etudiants[nb].dateNaissance.annee);
+    printf("Entrez le département: ");
+    scanf("%s", etudiants[nb].departement);
+    printf("Entrez la note: ");
+    scanf("%d", &etudiants[nb].noteGenerale);
 }
 
-void affichage(struct etudiantInfo etudiants[]) {
-    for(int i = 0; i < etudiants[]; i++) {
-        printf("id: %s", etudiants[i].id);
-        printf("prenom: %s", etudiants[i].prenom);
-        printf("nom: %s", etudiants[i].nom);
-        printf("date de naissance: %s", etudiants[i].dateNaissance.jour, etudiants[i].dateNaissance.mois, etudiants[i].dateNaissance.annee);
-        printf("departement: %s", etudiants[i].departement);
-        printf("note general: %s", etudiants[i].noteGenerale);
+void affichage(struct etudiantInfo etudiants[], int nb)
+{
+    for (int i = 0; i < nb; i++)
+    {
+        printf("id: %d\n", etudiants[i].id);
+        printf("prenom: %s\n", etudiants[i].prenom);
+        printf("nom: %s\n", etudiants[i].nom);
+        printf("date de naissance: %s\n", etudiants[i].dateNaissance.jour, etudiants[i].dateNaissance.mois, etudiants[i].dateNaissance.annee);
+        printf("departement: %s\n", etudiants[i].departement);
+        printf("note general: %d\n", etudiants[i].noteGenerale);
     }
     return;
 }
 
-int main() {
+void modification(struct etudiantInfo etudiants[], int nb)
+{
+    int studentId, moChoix;
+    printf("Entrer etudiant ID pour modifie: ");
+    scanf("%d", &studentId);
 
-    struct etudiantInfo etudiants[]; 
+    printf("\n1. pour modifie le prenom.\n");
+    printf("2. pour modifie le nom.\n");
+    printf("3. pour modifie le date de naissance.\n");
+    printf("4. pour modifie le departement.\n");
+    printf("5. pour modifie le note general.\n");
+    printf("\nentrez un numéro que vous souhaitez modifier: ");
+    scanf("%d", &moChoix);
+
+    switch (moChoix)
+    {
+    case 1:
+        for (int i = 0; i < nb; i++)
+        {
+            if (etudiants[i].id == studentId)
+            {
+                printf("Entrez le nouveau prénom: ");
+                scanf("%s", etudiants[i].prenom);
+                printf("changer avec succès.!\n");
+                return;
+            }
+        }
+        break;
+    case 2:
+        for (int i = 0; i < nb; i++)
+        {
+            if (etudiants[i].id == studentId)
+            {
+                printf("Entrez le nouveau nom: ");
+                scanf("%s", etudiants[i].nom);
+                printf("changer avec succès.!\n");
+                return;
+            }
+        }
+        break;
+    case 3:
+        for (int i = 0; i < nb; i++)
+        {
+            if (etudiants[i].id == studentId)
+            {
+                printf("Entrez la nouvelle date de naissance (JJ/MM/AAAA): ");
+                scanf("%s", etudiants[i].dateNaissance.jour, etudiants[i].dateNaissance.mois, etudiants[i].dateNaissance.annee);
+                printf("changer avec succès.!\n");
+                return;
+            }
+        }
+        break;
+    case 4:
+        for (int i = 0; i < nb; i++)
+        {
+            if (etudiants[i].id == studentId)
+            {
+                printf("Entrez le nouveau département: ");
+                scanf("%s", etudiants[i].departement);
+                printf("changer avec succès.!\n");
+                return;
+            }
+        }
+        break;
+    case 5:
+        for (int i = 0; i < nb; i++)
+        {
+            if (etudiants[i].id == studentId)
+            {
+                printf("Entrez la nouvelle note: ");
+                scanf("%d", &etudiants[i].noteGenerale);
+                printf("changer avec succès.!\n");
+                return;
+            }
+        }
+        break;
+    default:
+        printf("Entrer un numero entre 1 a 5!");
+        break;
+    }
+    printf("Étudiant avec ID %d non trouvé !", studentId);
+}
+
+int main()
+{
+    int nb = 0;
+    struct etudiantInfo etudiants[100];
 
     int choix;
-    do{
+    do
+    {
         printf("\n1. Ajouter un étudiant: \n");
         printf("2. Modifier un étudiant: \n");
         printf("3. Supprimer un étudiant: \n");
@@ -62,40 +154,43 @@ int main() {
         printf("\nChoisissez une option: ");
         scanf("%d", &choix);
 
-        switch(choix) {
-            case 1:
-            ajouterEtudiant(etudiants);
+        switch (choix)
+        {
+        case 1:
+            ajouterEtudiant(etudiants, nb);
+            nb++;
             break;
-            case 2:
-            affichage(etudiants);
+        case 2:
+            modification(etudiants, nb);
             break;
-            case 3:
+        case 3:
             break;
-            case 4:
+        case 4:
+            affichage(etudiants, nb);
             break;
-            case 5:
+        case 5:
             break;
-            case 6:
+        case 6:
             break;
-            case 7:
+        case 7:
             break;
-            case 8:
+        case 8:
             break;
-            case 9:
+        case 9:
             break;
-            case 10:
+        case 10:
             break;
-            case 11:
+        case 11:
             break;
-            case 0:
+        case 0:
             printf("Au revoir!");
             break;
 
-            default:
+        default:
             printf("\nEntrer nomber entre 1 - 11\n");
             break;
         }
-    } while(choix != 0);
+    } while (choix != 0);
 
     return 0;
 }
