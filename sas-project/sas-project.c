@@ -20,7 +20,7 @@ struct etudiantInfo
 void ajouterEtudiant(struct etudiantInfo etudiants[], int nb)
 {
     int depChoix;
-    printf("Entrez l'ID de l'étudiant: ");
+    printf("\nEntrez l'ID de l'étudiant: ");
     scanf("%d", &etudiants[nb].id);
     printf("Entrez le prénom: ");
     scanf("%s", etudiants[nb].prenom);
@@ -497,6 +497,66 @@ void nomberReussi(struct etudiantInfo etudiants[], int nb)
     }
 }
 
+void afficherEttSyp(struct etudiantInfo etudiants[], int nb)
+{
+    float userInput;
+    printf("\nEntrez un nombre pour indiquer le nombre d'élèves qui ont obtenu une note supérieure à celle-ci: ");
+    scanf("%f", &userInput);
+
+    for (int i = 0; i < nb; i++)
+    {
+        if (etudiants[i].noteGenerale > userInput)
+        {
+            printf("\n**Etudiant ID-%d informations:\n", etudiants[i].id);
+            printf("Prenom: %s\n", etudiants[i].prenom);
+            printf("Nom: %s\n", etudiants[i].nom);
+            printf("Departement: %s\n", etudiants[i].departement);
+            printf("Note general: %.2f\n", etudiants[i].noteGenerale);
+            printf("----------------------\n");
+        }
+        else
+        {
+            printf("\nIl n\'y a aucun étudiant avec une moyenne cumulative supérieure à %.2f\n", userInput);
+        }
+    }
+}
+
+void triNoms(struct etudiantInfo etudiants[], int nb)
+{
+    struct etudiantInfo temp;
+    int choix;
+
+    printf("\n1. Trier les noms de A à Z\n");
+    printf("2. Trier les noms de Z à A\n");
+    printf("Choisissez une option: ");
+    scanf("%d", &choix);
+    int c = 0;
+    for (int i = 0; i < nb - 1; i++)
+    {
+        for (int j = i + 1; j < nb; j++)
+        {
+            if (choix == 1 && strcmp(etudiants[i].nom, etudiants[j].nom) > 0)
+            {
+                temp = etudiants[i];
+                etudiants[i] = etudiants[j];
+                etudiants[j] = temp;
+            }
+            else if (choix == 2 && strcmp(etudiants[i].nom, etudiants[j].nom) < 0)
+            {
+                temp = etudiants[i];
+                etudiants[i] = etudiants[j];
+                etudiants[j] = temp;
+            }
+            c++;
+        }
+    }
+    printf("\ncomlexity: %d\n", c);
+    printf("\nListe des étudiants triés:\n");
+    for (int i = 0; i < nb; i++)
+    {
+        printf("Nom: %s, Prénom: %s\n", etudiants[i].nom, etudiants[i].prenom);
+    }
+}
 
 int main()
 {
@@ -506,20 +566,21 @@ int main()
     int choix;
     do
     {
-        printf("\n1. Ajouter un étudiant: \n");                                          // done
-        printf("2. Modifier un étudiant: \n");                                           // done
-        printf("3. Supprimer un étudiant: \n");                                          // done
-        printf("4. Afficher tous les étudiants: \n");                                    // done
-        printf("5. Rechercher un étudiant par nom: \n");                                 // done
-        printf("6. Afficher la liste des étudiants dans un département spécifique: \n"); // done
-        printf("7. Afficher les étudiants dans chaque département: \n");
+        printf("\n1. Ajouter un étudiant: \n");                                                // done
+        printf("2. Modifier un étudiant: \n");                                                 // done
+        printf("3. Supprimer un étudiant: \n");                                                // done
+        printf("4. Afficher tous les étudiants: \n");                                          // done
+        printf("5. Rechercher un étudiant par nom: \n");                                       // done
+        printf("6. Afficher la liste des étudiants dans un département spécifique: \n");       // done
+        printf("7. Afficher les étudiants dans chaque département: \n");                       // done
         printf("8. Afficher les M-G par chaque département et de l\'université entière.: \n"); // done
         printf("9. Afficher les 3 meilleurs étudiants: \n");                                   // done
         printf("10. Afficher le nomber de etudiants dans la université: \n");                  // done
-        printf("11. Afficher le nomber des étudiants ayant réussi: \n");
-        printf("12. Trier les étudiants par nom: \n");
-        printf("13. Trier les étudiants par niveau: \n");
-        printf("14. Trier les étudiants par statut: \n");
+        printf("11. Afficher le nomber des étudiants ayant réussi: \n");                       // done
+        printf("12. Afficher les étudiants ayant une M-G supérieure à un certain seuil.: \n");
+        printf("13. Trier les étudiants par nom: \n");
+        printf("14. Trier les étudiants par niveau: \n");
+        printf("15. Trier les étudiants par statut: \n");
         printf("0. Quitter\n");
         printf("\nChoisissez une option: ");
         scanf("%d", &choix);
@@ -558,9 +619,13 @@ int main()
             totalEtudiants(etudiants, nb);
             break;
         case 11:
-        nomberReussi(etudiants, nb);
+            nomberReussi(etudiants, nb);
             break;
         case 12:
+            afficherEttSyp(etudiants, nb);
+            break;
+        case 13:
+            triNoms(etudiants, nb);
             break;
         case 0:
             printf("Au revoir!");
