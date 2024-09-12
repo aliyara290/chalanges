@@ -404,6 +404,33 @@ void moyenneGeneral(struct etudiantInfo etudiants[], int nb)
     }
 }
 
+void meilleursTrois(struct etudiantInfo etudiants[], int nb)
+{
+    struct etudiantInfo temp;
+    for (int i = 0; i < nb - 1; i++)
+    {
+        for (int j = i + 1; j < nb; j++)
+        {
+            if (etudiants[i].noteGenerale < etudiants[j].noteGenerale)
+            {
+                temp = etudiants[i];
+                etudiants[i] = etudiants[j];
+                etudiants[j] = temp;
+            }
+        }
+    }
+    printf("\nLes trois meilleurs étudiants:\n");
+    for (int i = 0; i < 3 && i < nb; i++)
+    {
+        printf("\n**Etudiant ID-%d informations:\n", etudiants[i].id);
+        printf("Prenom: %s\n", etudiants[i].prenom);
+        printf("Nom: %s\n", etudiants[i].nom);
+        printf("Departement: %s\n", etudiants[i].departement);
+        printf("Note general: %.2f\n", etudiants[i].noteGenerale);
+        printf("----------------------\n");
+    }
+}
+
 void totalEtudiants(struct etudiantInfo etudiants[], int nb)
 {
     int total = 0;
@@ -419,6 +446,57 @@ void totalEtudiants(struct etudiantInfo etudiants[], int nb)
         printf("\nIl n'y a pas d'étudiants");
     }
 }
+
+void nomberReussi(struct etudiantInfo etudiants[], int nb)
+{
+    int choix;
+    printf("\n1. Pour afficher le nombre d'étudiants ayant réussi dans le département Web Development.\n");
+    printf("2. Pour afficher le nombre d'étudiants ayant réussi dans le département Data Science.\n");
+    printf("3. Pour afficher le nombre d'étudiants ayant réussi dans le département DevOps.\n");
+    printf("4. Pour afficher le nombre d'étudiants ayant réussi dans le département AI.\n");
+    printf("Entrez un numéro de département: ");
+    scanf("%d", &choix);
+
+    char depSelected[30];
+    int total = 0;
+
+    switch (choix)
+    {
+    case 1:
+        strcpy(depSelected, "dev");
+        break;
+    case 2:
+        strcpy(depSelected, "data");
+        break;
+    case 3:
+        strcpy(depSelected, "devops");
+        break;
+    case 4:
+        strcpy(depSelected, "ai");
+        break;
+    default:
+        printf("Veuillez entrer un numéro entre 1 et 4!\n");
+        return;
+    }
+
+    for (int i = 0; i < nb; i++)
+    {
+        if (strcmp(etudiants[i].departement, depSelected) == 0 && etudiants[i].noteGenerale >= 10)
+        {
+            total++;
+        }
+    }
+
+    if (total == 0)
+    {
+        printf("\nAucun étudiant n'a réussi dans ce département!\n");
+    }
+    else
+    {
+        printf("\nLe nombre total d'étudiants ayant réussi dans le département %s est: %d\n", depSelected, total);
+    }
+}
+
 
 int main()
 {
@@ -438,7 +516,7 @@ int main()
         printf("8. Afficher les M-G par chaque département et de l\'université entière.: \n"); // done
         printf("9. Afficher les 3 meilleurs étudiants: \n");                                   // done
         printf("10. Afficher le nomber de etudiants dans la université: \n");                  // done
-        printf("11. Afficher les étudiants ayant réussi: \n");
+        printf("11. Afficher le nomber des étudiants ayant réussi: \n");
         printf("12. Trier les étudiants par nom: \n");
         printf("13. Trier les étudiants par niveau: \n");
         printf("14. Trier les étudiants par statut: \n");
@@ -474,11 +552,13 @@ int main()
             moyenneGeneral(etudiants, nb);
             break;
         case 9:
+            meilleursTrois(etudiants, nb);
             break;
         case 10:
             totalEtudiants(etudiants, nb);
             break;
         case 11:
+        nomberReussi(etudiants, nb);
             break;
         case 12:
             break;
